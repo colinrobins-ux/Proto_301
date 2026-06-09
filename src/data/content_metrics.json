@@ -1,0 +1,1058 @@
+[
+  {
+    "month": "Jan",
+    "year": 2024,
+    "content_views": 154477,
+    "subscriber_churn": 2.63,
+    "ad_revenue": 12770,
+    "engagement_rate": 5.7,
+    "content_publish_volume": 12,
+    "avg_time_on_page": 127,
+    "new_subscriber_signups": 1737,
+    "revenue_breakdown": {
+      "display": 5158,
+      "pre_roll": 4064,
+      "sponsored": 3548
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Jan",
+        "content_views": 37193,
+        "ad_revenue": 18000,
+        "engagement_rate": 7.1
+      },
+      {
+        "weekLabel": "W2 Jan",
+        "content_views": 41925,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.7
+      },
+      {
+        "weekLabel": "W3 Jan",
+        "content_views": 41479,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.1
+      },
+      {
+        "weekLabel": "W4 Jan",
+        "content_views": 37770,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.2
+      }
+    ]
+  },
+  {
+    "month": "Feb",
+    "year": 2024,
+    "content_views": 152188,
+    "subscriber_churn": 2.21,
+    "ad_revenue": -20,
+    "engagement_rate": 7,
+    "content_publish_volume": 15,
+    "avg_time_on_page": 99,
+    "new_subscriber_signups": 2012,
+    "revenue_breakdown": {
+      "display": -8,
+      "pre_roll": -6,
+      "sponsored": 0
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Feb",
+        "content_views": 33756,
+        "ad_revenue": 18000,
+        "engagement_rate": 7.8
+      },
+      {
+        "weekLabel": "W2 Feb",
+        "content_views": 34926,
+        "ad_revenue": 18000,
+        "engagement_rate": 7.4
+      },
+      {
+        "weekLabel": "W3 Feb",
+        "content_views": 36637,
+        "ad_revenue": 18000,
+        "engagement_rate": 7.5
+      },
+      {
+        "weekLabel": "W4 Feb",
+        "content_views": 37217,
+        "ad_revenue": 18000,
+        "engagement_rate": 7.5
+      }
+    ]
+  },
+  {
+    "month": "Mar",
+    "year": 2024,
+    "content_views": 156548,
+    "subscriber_churn": 3.56,
+    "ad_revenue": 9270,
+    "engagement_rate": 5.2,
+    "content_publish_volume": 20,
+    "avg_time_on_page": 110,
+    "new_subscriber_signups": 2304,
+    "revenue_breakdown": {
+      "display": 3594,
+      "pre_roll": 2920,
+      "sponsored": 2756
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Mar",
+        "content_views": 34769,
+        "ad_revenue": 18000,
+        "engagement_rate": 5
+      },
+      {
+        "weekLabel": "W2 Mar",
+        "content_views": 32521,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.7
+      },
+      {
+        "weekLabel": "W3 Mar",
+        "content_views": 34554,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.1
+      },
+      {
+        "weekLabel": "W4 Mar",
+        "content_views": 30429,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.3
+      },
+      {
+        "weekLabel": "W5 Mar",
+        "content_views": 33778,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.2
+      }
+    ]
+  },
+  {
+    "month": "Apr",
+    "year": 2024,
+    "content_views": 188952,
+    "subscriber_churn": 3.07,
+    "ad_revenue": 8800,
+    "engagement_rate": 3.4,
+    "content_publish_volume": 19,
+    "avg_time_on_page": 78,
+    "new_subscriber_signups": 2199,
+    "revenue_breakdown": {
+      "display": 3171,
+      "pre_roll": 2945,
+      "sponsored": 2684
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Apr",
+        "content_views": 49282,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.2
+      },
+      {
+        "weekLabel": "W2 Apr",
+        "content_views": 46726,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.4
+      },
+      {
+        "weekLabel": "W3 Apr",
+        "content_views": 48715,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.9
+      },
+      {
+        "weekLabel": "W4 Apr",
+        "content_views": 43767,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.8
+      }
+    ]
+  },
+  {
+    "month": "May",
+    "year": 2024,
+    "content_views": 174950,
+    "subscriber_churn": 2.95,
+    "ad_revenue": 14880,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 17,
+    "avg_time_on_page": 57,
+    "new_subscriber_signups": 2376,
+    "revenue_breakdown": {
+      "display": 5976,
+      "pre_roll": 4466,
+      "sponsored": 4438
+    },
+    "week": [
+      {
+        "weekLabel": "W1 May",
+        "content_views": 46978,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.1
+      },
+      {
+        "weekLabel": "W2 May",
+        "content_views": 44780,
+        "ad_revenue": 18000,
+        "engagement_rate": 3
+      },
+      {
+        "weekLabel": "W3 May",
+        "content_views": 41063,
+        "ad_revenue": 18000,
+        "engagement_rate": 4
+      },
+      {
+        "weekLabel": "W4 May",
+        "content_views": 47044,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      }
+    ]
+  },
+  {
+    "month": "Jun",
+    "year": 2024,
+    "content_views": 187923,
+    "subscriber_churn": 2.3,
+    "ad_revenue": 17680,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 18,
+    "avg_time_on_page": 55,
+    "new_subscriber_signups": 2483,
+    "revenue_breakdown": {
+      "display": 7227,
+      "pre_roll": 5879,
+      "sponsored": 4574
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Jun",
+        "content_views": 36085,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.5
+      },
+      {
+        "weekLabel": "W2 Jun",
+        "content_views": 34541,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W3 Jun",
+        "content_views": 37266,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.4
+      },
+      {
+        "weekLabel": "W4 Jun",
+        "content_views": 39848,
+        "ad_revenue": 18000,
+        "engagement_rate": 3
+      },
+      {
+        "weekLabel": "W5 Jun",
+        "content_views": 33868,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.3
+      }
+    ]
+  },
+  {
+    "month": "Jul",
+    "year": 2024,
+    "content_views": 187130,
+    "subscriber_churn": 2.27,
+    "ad_revenue": 7330,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 13,
+    "avg_time_on_page": 55,
+    "new_subscriber_signups": 2059,
+    "revenue_breakdown": {
+      "display": 2832,
+      "pre_roll": 2259,
+      "sponsored": 2239
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Jul",
+        "content_views": 49424,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.5
+      },
+      {
+        "weekLabel": "W2 Jul",
+        "content_views": 44177,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W3 Jul",
+        "content_views": 51287,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.3
+      },
+      {
+        "weekLabel": "W4 Jul",
+        "content_views": 42882,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      }
+    ]
+  },
+  {
+    "month": "Aug",
+    "year": 2024,
+    "content_views": 221566,
+    "subscriber_churn": 1.97,
+    "ad_revenue": 8190,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 10,
+    "avg_time_on_page": 55,
+    "new_subscriber_signups": 2023,
+    "revenue_breakdown": {
+      "display": 3308,
+      "pre_roll": 2485,
+      "sponsored": 2397
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Aug",
+        "content_views": 50783,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.8
+      },
+      {
+        "weekLabel": "W2 Aug",
+        "content_views": 53143,
+        "ad_revenue": 18000,
+        "engagement_rate": 4
+      },
+      {
+        "weekLabel": "W3 Aug",
+        "content_views": 57769,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W4 Aug",
+        "content_views": 54860,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      }
+    ]
+  },
+  {
+    "month": "Sep",
+    "year": 2024,
+    "content_views": 198511,
+    "subscriber_churn": 1.93,
+    "ad_revenue": 8960,
+    "engagement_rate": 3,
+    "content_publish_volume": 10,
+    "avg_time_on_page": 60,
+    "new_subscriber_signups": 1666,
+    "revenue_breakdown": {
+      "display": 3299,
+      "pre_roll": 2563,
+      "sponsored": 3098
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Sep",
+        "content_views": 42226,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W2 Sep",
+        "content_views": 39459,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.5
+      },
+      {
+        "weekLabel": "W3 Sep",
+        "content_views": 35962,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W4 Sep",
+        "content_views": 38160,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.3
+      },
+      {
+        "weekLabel": "W5 Sep",
+        "content_views": 37272,
+        "ad_revenue": 18000,
+        "engagement_rate": 4
+      }
+    ]
+  },
+  {
+    "month": "Oct",
+    "year": 2024,
+    "content_views": 205417,
+    "subscriber_churn": 1.7,
+    "ad_revenue": 5990,
+    "engagement_rate": 4.4,
+    "content_publish_volume": 10,
+    "avg_time_on_page": 72,
+    "new_subscriber_signups": 1924,
+    "revenue_breakdown": {
+      "display": 2405,
+      "pre_roll": 1751,
+      "sponsored": 1834
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Oct",
+        "content_views": 49758,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.1
+      },
+      {
+        "weekLabel": "W2 Oct",
+        "content_views": 46523,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.1
+      },
+      {
+        "weekLabel": "W3 Oct",
+        "content_views": 48548,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.7
+      },
+      {
+        "weekLabel": "W4 Oct",
+        "content_views": 52831,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.1
+      }
+    ]
+  },
+  {
+    "month": "Nov",
+    "year": 2024,
+    "content_views": 210635,
+    "subscriber_churn": 1.7,
+    "ad_revenue": 8080,
+    "engagement_rate": 5.3,
+    "content_publish_volume": 11,
+    "avg_time_on_page": 81,
+    "new_subscriber_signups": 2010,
+    "revenue_breakdown": {
+      "display": 2998,
+      "pre_roll": 2340,
+      "sponsored": 2742
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Nov",
+        "content_views": 52953,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.6
+      },
+      {
+        "weekLabel": "W2 Nov",
+        "content_views": 54015,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.7
+      },
+      {
+        "weekLabel": "W3 Nov",
+        "content_views": 56879,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.2
+      },
+      {
+        "weekLabel": "W4 Nov",
+        "content_views": 52987,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.3
+      }
+    ]
+  },
+  {
+    "month": "Dec",
+    "year": 2024,
+    "content_views": 238297,
+    "subscriber_churn": 1.72,
+    "ad_revenue": 15630,
+    "engagement_rate": 6.5,
+    "content_publish_volume": 12,
+    "avg_time_on_page": 109,
+    "new_subscriber_signups": 2127,
+    "revenue_breakdown": {
+      "display": 5881,
+      "pre_roll": 5324,
+      "sponsored": 4425
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Dec",
+        "content_views": 47784,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.3
+      },
+      {
+        "weekLabel": "W2 Dec",
+        "content_views": 50142,
+        "ad_revenue": 18000,
+        "engagement_rate": 7.3
+      },
+      {
+        "weekLabel": "W3 Dec",
+        "content_views": 44160,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.7
+      },
+      {
+        "weekLabel": "W4 Dec",
+        "content_views": 48303,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.2
+      },
+      {
+        "weekLabel": "W5 Dec",
+        "content_views": 51896,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.9
+      }
+    ]
+  },
+  {
+    "month": "Jan",
+    "year": 2025,
+    "content_views": 223013,
+    "subscriber_churn": 2.86,
+    "ad_revenue": 12040,
+    "engagement_rate": 7.3,
+    "content_publish_volume": 13,
+    "avg_time_on_page": 108,
+    "new_subscriber_signups": 2747,
+    "revenue_breakdown": {
+      "display": 5247,
+      "pre_roll": 3903,
+      "sponsored": 2890
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Jan",
+        "content_views": 51736,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.9
+      },
+      {
+        "weekLabel": "W2 Jan",
+        "content_views": 59381,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.2
+      },
+      {
+        "weekLabel": "W3 Jan",
+        "content_views": 56548,
+        "ad_revenue": 18000,
+        "engagement_rate": 8.2
+      },
+      {
+        "weekLabel": "W4 Jan",
+        "content_views": 54757,
+        "ad_revenue": 18000,
+        "engagement_rate": 8.1
+      }
+    ]
+  },
+  {
+    "month": "Feb",
+    "year": 2025,
+    "content_views": 228594,
+    "subscriber_churn": 2.43,
+    "ad_revenue": 11250,
+    "engagement_rate": 6.2,
+    "content_publish_volume": 15,
+    "avg_time_on_page": 122,
+    "new_subscriber_signups": 2637,
+    "revenue_breakdown": {
+      "display": 4568,
+      "pre_roll": 3281,
+      "sponsored": 3401
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Feb",
+        "content_views": 53994,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.8
+      },
+      {
+        "weekLabel": "W2 Feb",
+        "content_views": 60559,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.4
+      },
+      {
+        "weekLabel": "W3 Feb",
+        "content_views": 58360,
+        "ad_revenue": 18000,
+        "engagement_rate": 7.4
+      },
+      {
+        "weekLabel": "W4 Feb",
+        "content_views": 55696,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.4
+      }
+    ]
+  },
+  {
+    "month": "Mar",
+    "year": 2025,
+    "content_views": 236350,
+    "subscriber_churn": 3.32,
+    "ad_revenue": 6750,
+    "engagement_rate": 4.5,
+    "content_publish_volume": 20,
+    "avg_time_on_page": 99,
+    "new_subscriber_signups": 3261,
+    "revenue_breakdown": {
+      "display": 2558,
+      "pre_roll": 2344,
+      "sponsored": 1848
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Mar",
+        "content_views": 43523,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.3
+      },
+      {
+        "weekLabel": "W2 Mar",
+        "content_views": 46742,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.9
+      },
+      {
+        "weekLabel": "W3 Mar",
+        "content_views": 50216,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.1
+      },
+      {
+        "weekLabel": "W4 Mar",
+        "content_views": 45943,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.2
+      },
+      {
+        "weekLabel": "W5 Mar",
+        "content_views": 50412,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.8
+      }
+    ]
+  },
+  {
+    "month": "Apr",
+    "year": 2025,
+    "content_views": 259336,
+    "subscriber_churn": 2.99,
+    "ad_revenue": 19510,
+    "engagement_rate": 3.6,
+    "content_publish_volume": 18,
+    "avg_time_on_page": 89,
+    "new_subscriber_signups": 3209,
+    "revenue_breakdown": {
+      "display": 8771,
+      "pre_roll": 6022,
+      "sponsored": 4717
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Apr",
+        "content_views": 64728,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.6
+      },
+      {
+        "weekLabel": "W2 Apr",
+        "content_views": 61736,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.5
+      },
+      {
+        "weekLabel": "W3 Apr",
+        "content_views": 60513,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.2
+      },
+      {
+        "weekLabel": "W4 Apr",
+        "content_views": 65247,
+        "ad_revenue": 18000,
+        "engagement_rate": 3
+      }
+    ]
+  },
+  {
+    "month": "May",
+    "year": 2025,
+    "content_views": 255986,
+    "subscriber_churn": 2.49,
+    "ad_revenue": 7430,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 19,
+    "avg_time_on_page": 55,
+    "new_subscriber_signups": 3205,
+    "revenue_breakdown": {
+      "display": 2933,
+      "pre_roll": 2227,
+      "sponsored": 2270
+    },
+    "week": [
+      {
+        "weekLabel": "W1 May",
+        "content_views": 68204,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.9
+      },
+      {
+        "weekLabel": "W2 May",
+        "content_views": 60015,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W3 May",
+        "content_views": 63484,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W4 May",
+        "content_views": 68603,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.6
+      }
+    ]
+  },
+  {
+    "month": "Jun",
+    "year": 2025,
+    "content_views": 254947,
+    "subscriber_churn": 2.54,
+    "ad_revenue": 14380,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 15,
+    "avg_time_on_page": 55,
+    "new_subscriber_signups": 2959,
+    "revenue_breakdown": {
+      "display": 5285,
+      "pre_roll": 5027,
+      "sponsored": 4068
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Jun",
+        "content_views": 52880,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.7
+      },
+      {
+        "weekLabel": "W2 Jun",
+        "content_views": 54113,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.5
+      },
+      {
+        "weekLabel": "W3 Jun",
+        "content_views": 55068,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.4
+      },
+      {
+        "weekLabel": "W4 Jun",
+        "content_views": 50941,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.4
+      },
+      {
+        "weekLabel": "W5 Jun",
+        "content_views": 51300,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.2
+      }
+    ]
+  },
+  {
+    "month": "Jul",
+    "year": 2025,
+    "content_views": 267269,
+    "subscriber_churn": 2.36,
+    "ad_revenue": 12790,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 13,
+    "avg_time_on_page": 55,
+    "new_subscriber_signups": 3115,
+    "revenue_breakdown": {
+      "display": 5351,
+      "pre_roll": 3985,
+      "sponsored": 3454
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Jul",
+        "content_views": 61827,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.9
+      },
+      {
+        "weekLabel": "W2 Jul",
+        "content_views": 62604,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.5
+      },
+      {
+        "weekLabel": "W3 Jul",
+        "content_views": 64426,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.7
+      },
+      {
+        "weekLabel": "W4 Jul",
+        "content_views": 70760,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.9
+      }
+    ]
+  },
+  {
+    "month": "Aug",
+    "year": 2025,
+    "content_views": 284620,
+    "subscriber_churn": 1.99,
+    "ad_revenue": 13510,
+    "engagement_rate": 2.8,
+    "content_publish_volume": 11,
+    "avg_time_on_page": 55,
+    "new_subscriber_signups": 2995,
+    "revenue_breakdown": {
+      "display": 5380,
+      "pre_roll": 4660,
+      "sponsored": 3470
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Aug",
+        "content_views": 67037,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.5
+      },
+      {
+        "weekLabel": "W2 Aug",
+        "content_views": 67734,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W3 Aug",
+        "content_views": 72518,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.2
+      },
+      {
+        "weekLabel": "W4 Aug",
+        "content_views": 66362,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.7
+      }
+    ]
+  },
+  {
+    "month": "Sep",
+    "year": 2025,
+    "content_views": 275688,
+    "subscriber_churn": 1.81,
+    "ad_revenue": 17700,
+    "engagement_rate": 3.2,
+    "content_publish_volume": 10,
+    "avg_time_on_page": 70,
+    "new_subscriber_signups": 2749,
+    "revenue_breakdown": {
+      "display": 6530,
+      "pre_roll": 5630,
+      "sponsored": 5540
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Sep",
+        "content_views": 53957,
+        "ad_revenue": 18000,
+        "engagement_rate": 4
+      },
+      {
+        "weekLabel": "W2 Sep",
+        "content_views": 52701,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.6
+      },
+      {
+        "weekLabel": "W3 Sep",
+        "content_views": 51102,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.1
+      },
+      {
+        "weekLabel": "W4 Sep",
+        "content_views": 55930,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.3
+      },
+      {
+        "weekLabel": "W5 Sep",
+        "content_views": 59485,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.8
+      }
+    ]
+  },
+  {
+    "month": "Oct",
+    "year": 2025,
+    "content_views": 274251,
+    "subscriber_churn": 1.7,
+    "ad_revenue": 19090,
+    "engagement_rate": 4.3,
+    "content_publish_volume": 10,
+    "avg_time_on_page": 65,
+    "new_subscriber_signups": 2641,
+    "revenue_breakdown": {
+      "display": 8243,
+      "pre_roll": 6457,
+      "sponsored": 4390
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Oct",
+        "content_views": 63704,
+        "ad_revenue": 18000,
+        "engagement_rate": 3.9
+      },
+      {
+        "weekLabel": "W2 Oct",
+        "content_views": 73484,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.5
+      },
+      {
+        "weekLabel": "W3 Oct",
+        "content_views": 71778,
+        "ad_revenue": 18000,
+        "engagement_rate": 3
+      },
+      {
+        "weekLabel": "W4 Oct",
+        "content_views": 64817,
+        "ad_revenue": 18000,
+        "engagement_rate": 2.9
+      }
+    ]
+  },
+  {
+    "month": "Nov",
+    "year": 2025,
+    "content_views": 290073,
+    "subscriber_churn": 1.7,
+    "ad_revenue": 18310,
+    "engagement_rate": 5.2,
+    "content_publish_volume": 11,
+    "avg_time_on_page": 95,
+    "new_subscriber_signups": 3051,
+    "revenue_breakdown": {
+      "display": 7071,
+      "pre_roll": 4997,
+      "sponsored": 6242
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Nov",
+        "content_views": 69555,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.4
+      },
+      {
+        "weekLabel": "W2 Nov",
+        "content_views": 75806,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.4
+      },
+      {
+        "weekLabel": "W3 Nov",
+        "content_views": 72094,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.6
+      },
+      {
+        "weekLabel": "W4 Nov",
+        "content_views": 75099,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.2
+      }
+    ]
+  },
+  {
+    "month": "Dec",
+    "year": 2025,
+    "content_views": 319956,
+    "subscriber_churn": 1.83,
+    "ad_revenue": 14310,
+    "engagement_rate": 5.4,
+    "content_publish_volume": 10,
+    "avg_time_on_page": 102,
+    "new_subscriber_signups": 3078,
+    "revenue_breakdown": {
+      "display": 5242,
+      "pre_roll": 4846,
+      "sponsored": 4222
+    },
+    "week": [
+      {
+        "weekLabel": "W1 Dec",
+        "content_views": 67103,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.2
+      },
+      {
+        "weekLabel": "W2 Dec",
+        "content_views": 63654,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.8
+      },
+      {
+        "weekLabel": "W3 Dec",
+        "content_views": 60921,
+        "ad_revenue": 18000,
+        "engagement_rate": 6.1
+      },
+      {
+        "weekLabel": "W4 Dec",
+        "content_views": 60568,
+        "ad_revenue": 18000,
+        "engagement_rate": 5.9
+      },
+      {
+        "weekLabel": "W5 Dec",
+        "content_views": 61847,
+        "ad_revenue": 18000,
+        "engagement_rate": 4.9
+      }
+    ]
+  }
+]

@@ -1,0 +1,74 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Inter', sans-serif;
+  background: #0E0F14;
+  color: #F0F2F8;
+}
+
+html, body, #root {
+  min-height: 100%;
+  margin: 0;
+  background: #0E0F14;
+}
+
+body {
+  background: #0E0F14;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.MuiPaper-root {
+  background: #16181F !important;
+  color: #F0F2F8 !important;
+}
+
+.mui-appbar {
+  background: rgba(14, 15, 20, 0.95);
+  border-bottom: 1px solid rgba(91, 141, 239, 0.18);
+}
+
+.dashboard-row {
+  gap: 32px;
+}
+
+.metric-card {
+  min-height: 204px;
+  border: 1px solid rgba(42, 45, 58, 0.9);
+  border-radius: 16px;
+  background: #16181F;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+}
+
+.metric-highlight {
+  box-shadow: 0 0 0 2px rgba(91, 141, 239, 0.15);
+}
+
+.solid-horizon {
+  height: 1px;
+  background: #5B8DEF;
+  width: 100%;
+}
+
+.chart-card {
+  border-radius: 16px;
+  border: 1px solid rgba(42, 45, 58, 0.9);
+  overflow: hidden;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0 24px;
+}
+
+.sanitize-tooltip {
+  background: rgba(16, 18, 28, 0.98);
+  border: 1px solid rgba(91, 141, 239, 0.2);
+  color: white;
+}
