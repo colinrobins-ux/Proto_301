@@ -289,7 +289,7 @@ const App = () => {
 
   const frequencyLabel = view === 'weekly' || timeFilter === 'This Week' || timeFilter === 'Last 30 Days' ? 'Weekly' : 'Monthly';
 
-  const metricSummaryRows = metricDefinitions.map((metric) => {
+  const metricSummaryRows = metricDefinitions.slice(0, 5).map((metric) => {
     const rawCurrent = timeFilter === 'Year to Date' ? getYtdValues(metric.key) : getMetricValue(metric.key, currentPeriod ?? ({} as ChartPoint));
     const rawPrior = timeFilter === 'Year to Date' ? getYtdValues(metric.key) * 0.95 : getMetricValue(metric.key, priorPeriod ?? ({} as ChartPoint));
     const { percent, direction } = formatDelta(rawCurrent, rawPrior);
@@ -401,8 +401,8 @@ const App = () => {
         </Typography>
 
         <Grid container spacing={2} className="dashboard-row">
-          <Grid item xs={12}>
-            <Card className="metric-card" sx={{ p: 2, pb: 1.5 }}>
+          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }}>
+            <Card className="metric-card" sx={{ p: 2, pb: 1.5, minHeight: 220 }}>
               <CardContent sx={{ p: 0 }}>
                 <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
                   <Box>
@@ -417,8 +417,11 @@ const App = () => {
                     Quick-read KPI table for top-level monitoring
                   </Typography>
                 </Box>
-                <TableContainer component={Box} sx={{ borderRadius: 2, overflow: 'hidden', background: '#16181F' }}>
-                  <Table size="small" sx={{ minWidth: 720, borderCollapse: 'separate', borderSpacing: '0 8px' }}>
+                <TableContainer
+                  component={Box}
+                  sx={{ borderRadius: 2, overflowX: 'auto', background: '#16181F', width: '100%' }}
+                >
+                  <Table size="small" sx={{ minWidth: '100%', width: '100%', borderCollapse: 'separate', borderSpacing: '0 8px', tableLayout: 'fixed' }}>
                     <TableHead>
                       <TableRow>
                         <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Metric</TableCell>
@@ -445,11 +448,11 @@ const App = () => {
                               </Typography>
                             </Box>
                           </TableCell>
-                          <TableCell sx={{ color: '#F0F2F8', borderBottom: 'none', fontFamily: 'Roboto Mono, monospace' }}>
+                          <TableCell sx={{ color: '#F0F2F8', borderBottom: 'none', fontFamily: 'Roboto Mono, monospace', minWidth: 80, pr: 1 }}>
                             {row.value}
                           </TableCell>
-                          <TableCell sx={{ borderBottom: 'none', px: 0 }}>
-                            <Box sx={{ width: 140, height: 44, pl: 1 }}>
+                          <TableCell sx={{ borderBottom: 'none', px: 0, minWidth: 96 }}>
+                            <Box sx={{ width: 90, height: 42, pl: 1, minWidth: 90 }}>
                               <ResponsiveContainer width="100%" height="100%">
                                 <LineChart data={row.sparklineData}>
                                   <Line type="monotone" dataKey={row.key} stroke="#A78BFA" strokeWidth={2} dot={false} />
@@ -467,8 +470,8 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6} ref={barRef}>
-            <Card className={`chart-card ${highlightedMetric === 'content_views' ? 'metric-highlight' : ''}`}>
+          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={barRef}>
+            <Card className={`chart-card ${highlightedMetric === 'content_views' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
               <Box className="chart-header">
                 <Box>
                   <Typography variant="subtitle2" color="text.secondary">
@@ -501,8 +504,8 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6} ref={churnRef}>
-            <Card className={`chart-card ${highlightedMetric === 'subscriber_churn' ? 'metric-highlight' : ''}`}>
+          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={churnRef}>
+            <Card className={`chart-card ${highlightedMetric === 'subscriber_churn' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
               <Box className="chart-header">
                 <Box>
                   <Typography variant="subtitle2" color="text.secondary">
@@ -540,8 +543,8 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6} ref={revenueRef}>
-            <Card className={`chart-card ${highlightedMetric === 'ad_revenue' ? 'metric-highlight' : ''}`}>
+          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={revenueRef}>
+            <Card className={`chart-card ${highlightedMetric === 'ad_revenue' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
               <Box className="chart-header">
                 <Box>
                   <Typography variant="subtitle2" color="text.secondary">
@@ -567,8 +570,8 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} md={6} ref={engagementRef}>
-            <Card className={`chart-card ${highlightedMetric === 'engagement_rate' ? 'metric-highlight' : ''}`}>
+          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={engagementRef}>
+            <Card className={`chart-card ${highlightedMetric === 'engagement_rate' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
               <Box className="chart-header">
                 <Box>
                   <Typography variant="subtitle2" color="text.secondary">
@@ -593,8 +596,8 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} ref={scatterRef}>
-            <Card className={`chart-card ${highlightedMetric === 'avg_time_on_page' ? 'metric-highlight' : ''}`}> 
+          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={scatterRef}>
+            <Card className={`chart-card ${highlightedMetric === 'avg_time_on_page' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}> 
               <Box className="chart-header">
                 <Box>
                   <Typography variant="subtitle2" color="text.secondary">
