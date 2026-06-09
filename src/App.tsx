@@ -548,7 +548,7 @@ const App = () => {
         </Typography>
 
         <Grid container spacing={2} className="dashboard-row">
-          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }}>
+          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }}>
             <Card className="metric-card" sx={{ p: 2, pb: 1.5, minHeight: 220 }}>
               <CardContent sx={{ p: 0 }}>
                 <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
@@ -617,7 +617,7 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={barRef}>
+          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={barRef}>
             <Card className={`chart-card ${highlightedMetric === 'content_views' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
@@ -651,7 +651,7 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={churnRef}>
+          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={churnRef}>
             <Card className={`chart-card ${highlightedMetric === 'subscriber_churn' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
@@ -690,7 +690,7 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={revenueRef}>
+          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={revenueRef}>
             <Card className={`chart-card ${highlightedMetric === 'ad_revenue' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
@@ -717,7 +717,7 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={engagementRef}>
+          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={engagementRef}>
             <Card className={`chart-card ${highlightedMetric === 'engagement_rate' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
@@ -743,7 +743,7 @@ const App = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={scatterRef}>
+          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={scatterRef}>
             <Card className={`chart-card ${highlightedMetric === 'avg_time_on_page' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}> 
               <Box className="chart-header">
                 <Box>
