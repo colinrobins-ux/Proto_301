@@ -34,18 +34,25 @@ body {
 }
 
 .metric-card {
-  min-height: 204px;
+  min-height: 220px;
   border: 1px solid rgba(42, 45, 58, 0.9);
   border-radius: 16px;
   background: #16181F;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 .metric-card:hover {
   transform: translateY(-2px);
+  border-color: rgba(91, 141, 239, 0.35);
+  box-shadow: 0 10px 22px rgba(5, 10, 25, 0.22);
+}
+
+.metric-card-content {
+  padding: 18px;
 }
 
 .metric-highlight {
-  box-shadow: 0 0 0 2px rgba(91, 141, 239, 0.15);
+  box-shadow: 0 0 0 2px rgba(91, 141, 239, 0.18);
 }
 
 .solid-horizon {

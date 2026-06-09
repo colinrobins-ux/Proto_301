@@ -290,44 +290,49 @@ const App = () => {
     const formattedDelta = `${Math.abs(percent).toFixed(1)}%`;
     const sparklineData = displayedSeries.slice(-8);
     return (
-      <Grid item xs={12} sm={6} md={4} lg={3} key={metric.key}>
+      <Box key={metric.key} sx={{ minWidth: 240, flex: '0 0 240px' }}>
         <Card
           className={`metric-card ${highlightedMetric === metric.key ? 'metric-highlight' : ''}`}
           sx={{ cursor: 'pointer', minHeight: 220 }}
           onClick={() => highlightedChart(metric.key)}
+          role="button"
+          aria-label={`${metric.label} card, ${formattedValue}, ${formattedDelta} vs prior period`}
         >
-          <CardContent>
-            <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
-              <Typography variant="subtitle2" color="text.secondary">
+          <CardContent className="metric-card-content">
+            <Box display="flex" alignItems="flex-start" justifyContent="space-between" mb={1}>
+              <Typography variant="subtitle1" color="#E5E9F0" sx={{ fontWeight: 600, letterSpacing: '0.08em' }}>
                 {metric.label}
               </Typography>
               <Box display="flex" alignItems="center" gap={0.5}>
-                {isPositive ? <ArrowDropUp sx={{ color: '#3DD68C' }} /> : <ArrowDropDown sx={{ color: '#F87171' }} />}
-                <Typography variant="caption" sx={{ color: isPositive ? '#3DD68C' : '#F87171' }}>
+                {isPositive ? <ArrowDropUp sx={{ color: '#3DD68C', fontSize: 26 }} /> : <ArrowDropDown sx={{ color: '#F87171', fontSize: 26 }} />}
+                <Typography variant="subtitle1" sx={{ color: isPositive ? '#3DD68C' : '#F87171', fontWeight: 700 }}>
                   {formattedDelta}
                 </Typography>
               </Box>
             </Box>
-            <Typography variant="h5" sx={{ fontFamily: 'Roboto Mono, monospace', letterSpacing: '0.04em', mb: 2 }}>
+            <Typography variant="h5" sx={{ fontFamily: 'Roboto Mono, monospace', letterSpacing: '0.06em', mb: 0.75, color: '#F0F2F8' }}>
               {formattedValue}
             </Typography>
-            <Box sx={{ width: '100%', height: 60 }}>
+            <Typography variant="body2" color="#AEB7D6" sx={{ mb: 1.5 }}>
+              vs prior period
+            </Typography>
+            <Box sx={{ width: '100%', height: 56, mb: 1 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={sparklineData}>
-                  <Line type="monotone" dataKey={metric.key} stroke="#A78BFA" strokeWidth={2} dot={false} />
+                  <Line type="monotone" dataKey={metric.key} stroke="#A78BFA" strokeWidth={2.5} dot={false} />
                 </LineChart>
               </ResponsiveContainer>
             </Box>
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" color="#AEB7D6">
               {view === 'weekly' || timeFilter === 'This Week' || timeFilter === 'Last 30 Days'
-                ? 'Trend (weekly)'
+                ? 'Weekly trend'
                 : timeFilter === 'Year to Date'
                 ? 'YTD trend'
-                : 'Trend (monthly)'}
+                : 'Monthly trend'}
             </Typography>
           </CardContent>
         </Card>
-      </Grid>
+      </Box>
     );
   });
 
@@ -424,9 +429,9 @@ const App = () => {
           <Grid item xs={12}>
             <Box
               sx={{
-                display: isMobile ? 'flex' : 'grid',
-                gridTemplateColumns: isMobile ? 'none' : 'repeat(4, minmax(0, 1fr))',
-                gap: 16,
+                display: 'grid',
+                gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(220px, 1fr))' : 'repeat(4, minmax(240px, 1fr))',
+                gap: 14,
                 overflowX: isMobile ? 'auto' : 'visible',
                 pb: isMobile ? 1 : 0,
               }}
