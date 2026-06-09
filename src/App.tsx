@@ -1,145 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import {
-  AppBar,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Container,
-  CssBaseline,
-  createTheme,
-  FormControl,
-  Grid,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  ThemeProvider,
-  ToggleButton,
-  ToggleButtonGroup,
-  TextField,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
-import {
-  ArrowDropDown,
-  ArrowDropUp,
-  CalendarMonth,
-  ExpandLess,
-  ExpandMore,
-  TrendingDown,
-  TrendingUp,
-} from '@mui/icons-material';
-import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  ComposedChart,
-  Label,
-  Legend,
-  Line,
-  LineChart,
-  ReferenceLine,
-  ResponsiveContainer,
-  Scatter,
-  ScatterChart,
-  Tooltip,
-  XAxis,
-  YAxis,
-  ZAxis,
-} from 'recharts';
+import { useMemo, useRef, useState } from 'react';
+import { Box, Container, CssBaseline, createTheme, ThemeProvider, useMediaQuery, Typography } from '@mui/material';
 import monthlyData from './data/content_metrics.json';
-import { MonthlyEntry, WeeklyPoint } from './types';
-
-const metricDefinitions = [
-  {
-    key: 'content_views',
-    label: 'Content Views',
-    valueLabel: (value: number) => value.toLocaleString(),
-    isPercent: false,
-    invertTrend: false,
-  },
-  {
-    key: 'subscriber_churn',
-    label: 'Subscriber Churn Rate',
-    valueLabel: (value: number) => `${value.toFixed(1)}%`,
-    isPercent: true,
-    invertTrend: true,
-  },
-  {
-    key: 'ad_revenue',
-    label: 'Ad Revenue',
-    valueLabel: (value: number) => `$${Math.round(value / 1000)}k`,
-    isPercent: false,
-    invertTrend: false,
-  },
-  {
-    key: 'engagement_rate',
-    label: 'Engagement Rate',
-    valueLabel: (value: number) => `${value.toFixed(1)}%`,
-    isPercent: true,
-    invertTrend: false,
-  },
-  {
-    key: 'content_publish_volume',
-    label: 'Publish Volume',
-    valueLabel: (value: number) => value.toLocaleString(),
-    isPercent: false,
-    invertTrend: false,
-  },
-  {
-    key: 'avg_time_on_page',
-    label: 'Avg. Time on Page',
-    valueLabel: (value: number) => `${value.toFixed(0)}s`,
-    isPercent: false,
-    invertTrend: false,
-  },
-  {
-    key: 'new_subscriber_signups',
-    label: 'New Subscriber Signups',
-    valueLabel: (value: number) => value.toLocaleString(),
-    isPercent: false,
-    invertTrend: false,
-  },
-];
-
-const filterOptions = [
-  'This Week',
-  'This Month',
-  'Last 30 Days',
-  'Month Picker',
-  'Year to Date',
-] as const;
-
-type FilterOption = (typeof filterOptions)[number];
-
-type ChartPoint = {
-  label: string;
-  content_views: number;
-  subscriber_churn?: number;
-  ad_revenue: number;
-  engagement_rate: number;
-  content_publish_volume?: number;
-  avg_time_on_page?: number;
-  month?: string;
-  year?: number;
-  revenue_breakdown?: {
-    display: number;
-    pre_roll: number;
-    sponsored: number;
-  };
-};
+import { ChartPoint, FilterOption, MonthlyEntry, filterOptions } from './types';
+import DashboardHeader from './components/DashboardHeader';
+import SummarySnapshotCard, { SummaryMetricRow } from './components/SummarySnapshotCard';
+import { ContentViewsChart, SubscriberChurnChart, AdRevenueChart, EngagementChart, QualityScatterChart } from './charts';
 
 const appTheme = createTheme({
   palette: {
@@ -227,6 +92,13 @@ const appTheme = createTheme({
         },
       },
     },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        grouped: {
+          borderColor: 'rgba(91,141,239,0.18)',
+        },
+      },
+    },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
@@ -243,22 +115,60 @@ const appTheme = createTheme({
         },
       },
     },
-    MuiToggleButton: {
-      styleOverrides: {
-        root: {
-          color: '#F0F2F8',
-        },
-      },
-    },
-    MuiToggleButtonGroup: {
-      styleOverrides: {
-        grouped: {
-          borderColor: 'rgba(91,141,239,0.18)',
-        },
-      },
-    },
   },
 });
+
+const metricDefinitions = [
+  {
+    key: 'content_views',
+    label: 'Content Views',
+    valueLabel: (value: number) => value.toLocaleString(),
+    isPercent: false,
+    invertTrend: false,
+  },
+  {
+    key: 'subscriber_churn',
+    label: 'Subscriber Churn Rate',
+    valueLabel: (value: number) => `${value.toFixed(1)}%`,
+    isPercent: true,
+    invertTrend: true,
+  },
+  {
+    key: 'ad_revenue',
+    label: 'Ad Revenue',
+    valueLabel: (value: number) => `$${Math.round(value / 1000)}k`,
+    isPercent: false,
+    invertTrend: false,
+  },
+  {
+    key: 'engagement_rate',
+    label: 'Engagement Rate',
+    valueLabel: (value: number) => `${value.toFixed(1)}%`,
+    isPercent: true,
+    invertTrend: false,
+  },
+  {
+    key: 'content_publish_volume',
+    label: 'Publish Volume',
+    valueLabel: (value: number) => value.toLocaleString(),
+    isPercent: false,
+    invertTrend: false,
+  },
+  {
+    key: 'avg_time_on_page',
+    label: 'Avg. Time on Page',
+    valueLabel: (value: number) => `${value.toFixed(0)}s`,
+    isPercent: false,
+    invertTrend: false,
+  },
+  {
+    key: 'new_subscriber_signups',
+    label: 'New Subscriber Signups',
+    valueLabel: (value: number) => value.toLocaleString(),
+    isPercent: false,
+    invertTrend: false,
+  },
+];
 
 const monthLabel = (entry: MonthlyEntry) => `${entry.month} ${entry.year}`;
 
@@ -266,6 +176,7 @@ const formatDelta = (current: number, prior: number) => {
   if (prior === 0) {
     return { percent: 0, direction: 'up' as const };
   }
+
   const diff = current - prior;
   const percent = (diff / Math.max(Math.abs(prior), 1)) * 100;
   return { percent, direction: diff >= 0 ? 'up' : 'down' as const };
@@ -293,9 +204,6 @@ const App = () => {
   const engagementRef = useRef<HTMLDivElement | null>(null);
   const scatterRef = useRef<HTMLDivElement | null>(null);
 
-  const chartTickStyle = { fill: '#8B90A7', fontSize: 12 };
-  const chartLegendStyle = { color: '#F0F2F8', fontSize: 12 };
-
   const selectedMonthEntry = useMemo(
     () => monthlyData.find((entry) => monthLabel(entry) === selectedMonth) ?? monthlyData[monthlyData.length - 1],
     [selectedMonth],
@@ -317,8 +225,6 @@ const App = () => {
       ),
     [],
   );
-
-  const lastWeeklyPoints = useMemo(() => allWeekly.slice(-5), [allWeekly]);
 
   const yearSeries = useMemo(
     () => monthlyData.filter((entry) => entry.year === selectedMonthEntry.year),
@@ -355,19 +261,8 @@ const App = () => {
   }, [timeFilter, allWeekly, selectedMonthEntry.year, weeklyForMonth]);
 
   const monthlySeries = useMemo<ChartPoint[]>(() => {
-    if (timeFilter === 'Year to Date') {
-      return yearSeries.map((entry) => ({
-        label: monthLabel(entry),
-        content_views: entry.content_views,
-        subscriber_churn: entry.subscriber_churn,
-        ad_revenue: entry.ad_revenue,
-        engagement_rate: entry.engagement_rate,
-        content_publish_volume: entry.content_publish_volume,
-        avg_time_on_page: entry.avg_time_on_page,
-        revenue_breakdown: entry.revenue_breakdown,
-      }));
-    }
-    return monthlyWindow.map((entry) => ({
+    const source = timeFilter === 'Year to Date' ? yearSeries : monthlyWindow;
+    return source.map((entry) => ({
       label: monthLabel(entry),
       content_views: entry.content_views,
       subscriber_churn: entry.subscriber_churn,
@@ -384,10 +279,7 @@ const App = () => {
   const currentPeriod = displayedSeries[displayedSeries.length - 1];
   const priorPeriod = displayedSeries[displayedSeries.length - 2] ?? displayedSeries[displayedSeries.length - 1];
 
-  const getMetricValue = (metricKey: string, point: ChartPoint) => {
-    if (!point) return 0;
-    return Number(point[metricKey as keyof ChartPoint] ?? 0);
-  };
+  const getMetricValue = (metricKey: string, point: ChartPoint) => Number(point[metricKey as keyof ChartPoint] ?? 0);
 
   const getYtdValues = (metricKey: string) => {
     const values = yearSeries.map((entry) => Number(entry[metricKey as keyof MonthlyEntry] ?? 0));
@@ -399,7 +291,7 @@ const App = () => {
 
   const highlightedChart = (key: string) => {
     setHighlightedMetric(key);
-    const map = {
+    const refMap = {
       content_views: barRef,
       subscriber_churn: churnRef,
       ad_revenue: revenueRef,
@@ -407,8 +299,9 @@ const App = () => {
       avg_time_on_page: scatterRef,
       content_publish_volume: engagementRef,
       new_subscriber_signups: scatterRef,
-    } as Record<string, React.RefObject<HTMLDivElement | null>>;
-    const ref = map[key];
+    } as const;
+
+    const ref = refMap[key as keyof typeof refMap];
     if (ref?.current) {
       ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -416,7 +309,7 @@ const App = () => {
 
   const frequencyLabel = view === 'weekly' || timeFilter === 'This Week' || timeFilter === 'Last 30 Days' ? 'Weekly' : 'Monthly';
 
-  const metricSummaryRows = metricDefinitions.slice(0, 5).map((metric) => {
+  const metricSummaryRows: SummaryMetricRow[] = metricDefinitions.slice(0, 5).map((metric) => {
     const rawCurrent = timeFilter === 'Year to Date' ? getYtdValues(metric.key) : getMetricValue(metric.key, currentPeriod ?? ({} as ChartPoint));
     const rawPrior = timeFilter === 'Year to Date' ? getYtdValues(metric.key) * 0.95 : getMetricValue(metric.key, priorPeriod ?? ({} as ChartPoint));
     const { percent, direction } = formatDelta(rawCurrent, rawPrior);
@@ -453,17 +346,6 @@ const App = () => {
     setChurnThreshold(clampValue(value, 1.5, 8));
   };
 
-  const scatterData = useMemo(() => {
-    return displayedSeries.map((point) => ({
-      label: point.label,
-      x: point.engagement_rate,
-      y: point.avg_time_on_page ?? 0,
-      z: point.content_views / 2000,
-      color: point.engagement_rate && point.engagement_rate >= 7 ? '#5B8DEF' : '#A78BFA',
-      value: point,
-    }));
-  }, [displayedSeries]);
-
   const currentSeriesLabel =
     timeFilter === 'This Week'
       ? 'Recent weeks'
@@ -479,328 +361,63 @@ const App = () => {
     <ThemeProvider theme={appTheme}>
       <CssBaseline />
       <Box sx={{ minHeight: '100vh', background: '#0E0F14', pb: 8 }}>
-        <AppBar position="sticky" className="mui-appbar" elevation={0}>
-        <Toolbar sx={{ gap: 2, flexWrap: 'wrap' }}>
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 600, letterSpacing: '0.08em' }}>
-              Content Command Center
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Content Strategy Manager
-            </Typography>
+        <DashboardHeader
+          timeFilter={timeFilter}
+          setTimeFilter={setTimeFilter}
+          filterOptions={filterOptions}
+          view={view}
+          setView={setView}
+          selectedMonth={selectedMonth}
+          setSelectedMonth={setSelectedMonth}
+          monthOptions={monthlyData.map(monthLabel)}
+        />
+
+        <Container maxWidth="xl" sx={{ pt: 5 }}>
+          <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+            {currentSeriesLabel}
+          </Typography>
+
+          <Box component="section">
+            <Box sx={{ display: 'grid', gap: 16, gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))' }}>
+              <Box>
+                <SummarySnapshotCard rows={metricSummaryRows} onMetricClick={highlightedChart} />
+              </Box>
+              <Box ref={barRef}>
+                <ContentViewsChart
+                  displayedSeries={displayedSeries}
+                  highlighted={highlightedMetric === 'content_views'}
+                  subtitle={`Views by ${view === 'weekly' ? 'week' : 'month'}`}
+                  onBarClick={onBarClick}
+                />
+              </Box>
+              <Box ref={churnRef}>
+                <SubscriberChurnChart
+                  displayedSeries={displayedSeries}
+                  churnThreshold={churnThreshold}
+                  highlighted={highlightedMetric === 'subscriber_churn'}
+                  onThresholdChange={handleThresholdChange}
+                  subtitle="Churn trend"
+                />
+              </Box>
+              <Box ref={revenueRef}>
+                <AdRevenueChart displayedSeries={displayedSeries} highlighted={highlightedMetric === 'ad_revenue'} subtitle="Revenue by type" />
+              </Box>
+              <Box ref={engagementRef}>
+                <EngagementChart displayedSeries={displayedSeries} highlighted={highlightedMetric === 'engagement_rate'} subtitle="Audience response" />
+              </Box>
+              <Box ref={scatterRef}>
+                <QualityScatterChart
+                  displayedSeries={displayedSeries}
+                  highlighted={highlightedMetric === 'avg_time_on_page'}
+                  pinnedPoint={pinnedPoint}
+                  onPointClick={setPinnedPoint}
+                />
+              </Box>
+            </Box>
           </Box>
-          <Box sx={{ flexGrow: 1 }} />
-          <FormControl size="small" sx={{ minWidth: 180 }}>
-            <InputLabel id="time-filter-label">Time Range</InputLabel>
-            <Select
-              labelId="time-filter-label"
-              value={timeFilter}
-              label="Time Range"
-              onChange={(event: SelectChangeEvent) => setTimeFilter(event.target.value as FilterOption)}
-              sx={{ color: '#F0F2F8' }}
-            >
-              {filterOptions.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <ToggleButtonGroup
-            value={view}
-            exclusive
-            onChange={(_, next) => next && setView(next)}
-            size="small"
-            sx={{ background: '#16181F', borderRadius: 2, border: '1px solid rgba(91, 141, 239, 0.18)' }}
-          >
-            <ToggleButton value="weekly" sx={{ color: '#F0F2F8' }}>
-              Weekly View
-            </ToggleButton>
-            <ToggleButton value="monthly" sx={{ color: '#F0F2F8' }}>
-              Monthly View
-            </ToggleButton>
-          </ToggleButtonGroup>
-          {timeFilter === 'Month Picker' ? (
-            <FormControl size="small" sx={{ minWidth: 180 }}>
-              <InputLabel id="month-picker-label">Month</InputLabel>
-              <Select
-                labelId="month-picker-label"
-                value={selectedMonth}
-                label="Month"
-                onChange={(event: SelectChangeEvent) => setSelectedMonth(event.target.value)}
-                sx={{ color: '#F0F2F8' }}
-              >
-                {monthlyData.map((month) => (
-                  <MenuItem key={monthLabel(month)} value={monthLabel(month)}>
-                    {monthLabel(month)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          ) : null}
-        </Toolbar>
-        <Box className="solid-horizon" />
-      </AppBar>
-
-      <Container maxWidth="xl" sx={{ pt: 5 }}>
-        <Typography variant="subtitle2" color="text.secondary" gutterBottom>
-          {currentSeriesLabel}
-        </Typography>
-
-        <Grid container spacing={2} className="dashboard-row">
-          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }}>
-            <Card className="metric-card" sx={{ p: 2, pb: 1.5, minHeight: 220 }}>
-              <CardContent sx={{ p: 0 }}>
-                <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 600 }}>
-                      Summary Snapshot
-                    </Typography>
-                    <Typography variant="h6" sx={{ color: '#F0F2F8', mt: 0.5 }}>
-                      Portfolio health at a glance
-                    </Typography>
-                  </Box>
-                  <Typography variant="caption" color="#AEB7D6">
-                    Quick-read KPI table for top-level monitoring
-                  </Typography>
-                </Box>
-                <TableContainer
-                  component={Box}
-                  sx={{ borderRadius: 2, overflowX: 'auto', background: '#16181F', width: '100%' }}
-                >
-                  <Table size="small" sx={{ minWidth: '100%', width: '100%', borderCollapse: 'separate', borderSpacing: '0 8px', tableLayout: 'fixed' }}>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Metric</TableCell>
-                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Trend</TableCell>
-                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Figure</TableCell>
-                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Sparkline</TableCell>
-                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Frequency</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {metricSummaryRows.map((row) => (
-                        <TableRow
-                          key={row.key}
-                          hover
-                          onClick={() => highlightedChart(row.key)}
-                          sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'rgba(91, 141, 239, 0.08)' } }}
-                        >
-                          <TableCell sx={{ color: '#F0F2F8', borderBottom: 'none', fontWeight: 600 }}>{row.label}</TableCell>
-                          <TableCell sx={{ color: row.trend.isPositive ? '#3DD68C' : '#F87171', borderBottom: 'none' }}>
-                            <Box display="flex" alignItems="center" gap={0.5}>
-                              {row.trend.isPositive ? <ArrowDropUp sx={{ fontSize: 18 }} /> : <ArrowDropDown sx={{ fontSize: 18 }} />}
-                              <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                                {row.trend.formattedDelta}
-                              </Typography>
-                            </Box>
-                          </TableCell>
-                          <TableCell sx={{ color: '#F0F2F8', borderBottom: 'none', fontFamily: 'Roboto Mono, monospace', minWidth: 80, pr: 1 }}>
-                            {row.value}
-                          </TableCell>
-                          <TableCell sx={{ borderBottom: 'none', px: 0, minWidth: 96 }}>
-                            <Box sx={{ width: 90, height: 42, pl: 1, minWidth: 90 }}>
-                              <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={row.sparklineData}>
-                                  <Line type="monotone" dataKey={row.key} stroke="#A78BFA" strokeWidth={2} dot={false} />
-                                </LineChart>
-                              </ResponsiveContainer>
-                            </Box>
-                          </TableCell>
-                          <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none' }}>{row.freq}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={barRef}>
-            <Card className={`chart-card ${highlightedMetric === 'content_views' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
-              <Box className="chart-header">
-                <Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Content Views
-                  </Typography>
-                  <Typography variant="subtitle1">Views by {view === 'weekly' ? 'week' : 'month'}</Typography>
-                </Box>
-                <Typography variant="caption" color="text.secondary">
-                  Click to drill
-                </Typography>
-              </Box>
-              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={displayedSeries} onClick={onBarClick} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
-                    <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <YAxis tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
-                    <Bar dataKey="content_views" radius={[8, 8, 0, 0]}> 
-                      {displayedSeries.map((entry, index) => {
-                        const avg = displayedSeries.reduce((sum, item) => sum + item.content_views, 0) / displayedSeries.length;
-                        return (
-                          <Cell key={`cell-${index}`} fill={entry.content_views >= avg ? '#5B8DEF' : '#1E2029'} />
-                        );
-                      })}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </Box>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={churnRef}>
-            <Card className={`chart-card ${highlightedMetric === 'subscriber_churn' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
-              <Box className="chart-header">
-                <Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Subscriber Churn Rate
-                  </Typography>
-                  <Typography variant="subtitle1">Churn trend</Typography>
-                </Box>
-                <Box display="flex" alignItems="center" gap={1}>
-                  <TextField
-                    value={churnThreshold}
-                    onChange={handleThresholdChange}
-                    size="small"
-                    inputProps={{ inputMode: 'decimal', pattern: '[0-9]*\.?[0-9]+' }}
-                    sx={{ width: 72, '& .MuiInputBase-input': { color: '#F0F2F8' } }}
-                    variant="outlined"
-                  />
-                  <Typography variant="caption" color="text.secondary">
-                    Target
-                  </Typography>
-                </Box>
-              </Box>
-              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
-                    <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <YAxis tick={chartTickStyle} axisLine={false} tickLine={false} unit="%" />
-                    <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
-                    <ReferenceLine y={churnThreshold} stroke="#3DD68C" strokeDasharray="5 5" label={{ value: `Target ${churnThreshold}%`, position: 'insideTopRight', fill: '#3DD68C', fontSize: 12 }} />
-                    <Line type="monotone" dataKey="subscriber_churn" stroke="#F87171" strokeWidth={3} dot={{ r: 4, fill: '#F87171' }} />
-                    <Area type="monotone" dataKey="subscriber_churn" stroke="none" fillOpacity={0.18} fill="#F87171" />
-                  </LineChart>
-                </ResponsiveContainer>
-              </Box>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={revenueRef}>
-            <Card className={`chart-card ${highlightedMetric === 'ad_revenue' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
-              <Box className="chart-header">
-                <Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Ad Revenue Composition
-                  </Typography>
-                  <Typography variant="subtitle1">Revenue by type</Typography>
-                </Box>
-              </Box>
-              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
-                    <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <YAxis tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
-                    <Legend wrapperStyle={chartLegendStyle} />
-                    <Bar dataKey="revenue_breakdown.display" stackId="a" fill="#5B8DEF" radius={[6, 6, 0, 0]} />
-                    <Bar dataKey="revenue_breakdown.pre_roll" stackId="a" fill="#A78BFA" radius={[6, 6, 0, 0]} />
-                    <Bar dataKey="revenue_breakdown.sponsored" stackId="a" fill="#3DD68C" radius={[6, 6, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </Box>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={engagementRef}>
-            <Card className={`chart-card ${highlightedMetric === 'engagement_rate' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
-              <Box className="chart-header">
-                <Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Engagement vs Publish Volume
-                  </Typography>
-                  <Typography variant="subtitle1">Audience response</Typography>
-                </Box>
-              </Box>
-              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
-                    <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <YAxis yAxisId="left" tick={chartTickStyle} axisLine={false} tickLine={false} unit="%" />
-                    <YAxis yAxisId="right" orientation="right" tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
-                    <Line yAxisId="left" type="monotone" dataKey="engagement_rate" stroke="#5B8DEF" strokeWidth={3} dot={{ r: 4, fill: '#5B8DEF' }} />
-                    <Line yAxisId="right" type="monotone" dataKey="content_publish_volume" stroke="#A78BFA" strokeWidth={2} dot={false} strokeDasharray="5 5" />
-                  </ComposedChart>
-                </ResponsiveContainer>
-              </Box>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={6} lg={6} sx={{ minWidth: 0 }} ref={scatterRef}>
-            <Card className={`chart-card ${highlightedMetric === 'avg_time_on_page' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}> 
-              <Box className="chart-header">
-                <Box>
-                  <Typography variant="body2" color="text.secondary">
-                    Content Quality Signal
-                  </Typography>
-                  <Typography variant="subtitle1">Time on page vs engagement</Typography>
-                </Box>
-                <Typography variant="caption" color="text.secondary">
-                  Click a dot to pin
-                </Typography>
-              </Box>
-              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <ScatterChart margin={{ left: 0, right: 20, top: 6, bottom: 6 }}>
-                    <CartesianGrid stroke="rgba(255,255,255,0.08)" />
-                    <XAxis type="number" dataKey="x" name="Engagement" unit="%" tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <YAxis type="number" dataKey="y" name="Avg time" unit="s" tick={chartTickStyle} axisLine={false} tickLine={false} />
-                    <ZAxis dataKey="z" range={[100, 400]} />
-                    <Tooltip
-                      cursor={{ strokeDasharray: '3 3' }}
-                      contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }}
-                      formatter={(value: number, name: string) => [value, name]}
-                      labelFormatter={(label) => `Point`}
-                    />
-                    <Scatter
-                      data={scatterData}
-                      fill="#5B8DEF"
-                      onClick={(event) => {
-                        if (event && 'payload' in event && event.payload) {
-                          setPinnedPoint(event.payload.label);
-                        }
-                      }}
-                    >
-                      {scatterData.map((entry) => (
-                        <Cell key={entry.label} fill={entry.color} />
-                      ))}
-                    </Scatter>
-                  </ScatterChart>
-                </ResponsiveContainer>
-                {pinnedPoint ? (
-                  <Box sx={{ mt: 2, p: 2, border: '1px solid rgba(91, 141, 239, 0.18)', borderRadius: 2, background: '#16181F' }}>
-                    <Typography variant="subtitle2" color="#5B8DEF">
-                      Pinned: {pinnedPoint}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Engagement, time, and volume comparison for the selected point.
-                    </Typography>
-                  </Box>
-                ) : null}
-              </Box>
-            </Card>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  </ThemeProvider>
+        </Container>
+      </Box>
+    </ThemeProvider>
   );
 };
 
