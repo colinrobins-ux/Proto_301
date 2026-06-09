@@ -13,6 +13,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   ToggleButton,
   ToggleButtonGroup,
   TextField,
@@ -281,59 +287,28 @@ const App = () => {
     }
   };
 
-  const metricCards = metricDefinitions.map((metric) => {
-    const rawCurrent = timeFilter === 'Year to Date' ? getYtdValues(metric.key) : getMetricValue(metric.key, currentPeriod ?? {} as ChartPoint);
-    const rawPrior = timeFilter === 'Year to Date' ? getYtdValues(metric.key) * 0.95 : getMetricValue(metric.key, priorPeriod ?? {} as ChartPoint);
+  const frequencyLabel = view === 'weekly' || timeFilter === 'This Week' || timeFilter === 'Last 30 Days' ? 'Weekly' : 'Monthly';
+
+  const metricSummaryRows = metricDefinitions.map((metric) => {
+    const rawCurrent = timeFilter === 'Year to Date' ? getYtdValues(metric.key) : getMetricValue(metric.key, currentPeriod ?? ({} as ChartPoint));
+    const rawPrior = timeFilter === 'Year to Date' ? getYtdValues(metric.key) * 0.95 : getMetricValue(metric.key, priorPeriod ?? ({} as ChartPoint));
     const { percent, direction } = formatDelta(rawCurrent, rawPrior);
     const isPositive = metric.invertTrend ? direction === 'down' : direction === 'up';
     const formattedValue = metric.valueLabel(rawCurrent);
     const formattedDelta = `${Math.abs(percent).toFixed(1)}%`;
-    const sparklineData = displayedSeries.slice(-8);
-    return (
-      <Box key={metric.key} sx={{ minWidth: 240, flex: '0 0 240px' }}>
-        <Card
-          className={`metric-card ${highlightedMetric === metric.key ? 'metric-highlight' : ''}`}
-          sx={{ cursor: 'pointer', minHeight: 220 }}
-          onClick={() => highlightedChart(metric.key)}
-          role="button"
-          aria-label={`${metric.label} card, ${formattedValue}, ${formattedDelta} vs prior period`}
-        >
-          <CardContent className="metric-card-content">
-            <Box display="flex" alignItems="flex-start" justifyContent="space-between" mb={1}>
-              <Typography variant="subtitle1" color="#E5E9F0" sx={{ fontWeight: 600, letterSpacing: '0.08em' }}>
-                {metric.label}
-              </Typography>
-              <Box display="flex" alignItems="center" gap={0.5}>
-                {isPositive ? <ArrowDropUp sx={{ color: '#3DD68C', fontSize: 26 }} /> : <ArrowDropDown sx={{ color: '#F87171', fontSize: 26 }} />}
-                <Typography variant="subtitle1" sx={{ color: isPositive ? '#3DD68C' : '#F87171', fontWeight: 700 }}>
-                  {formattedDelta}
-                </Typography>
-              </Box>
-            </Box>
-            <Typography variant="h5" sx={{ fontFamily: 'Roboto Mono, monospace', letterSpacing: '0.06em', mb: 0.75, color: '#F0F2F8' }}>
-              {formattedValue}
-            </Typography>
-            <Typography variant="body2" color="#AEB7D6" sx={{ mb: 1.5 }}>
-              vs prior period
-            </Typography>
-            <Box sx={{ width: '100%', height: 56, mb: 1 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={sparklineData}>
-                  <Line type="monotone" dataKey={metric.key} stroke="#A78BFA" strokeWidth={2.5} dot={false} />
-                </LineChart>
-              </ResponsiveContainer>
-            </Box>
-            <Typography variant="caption" color="#AEB7D6">
-              {view === 'weekly' || timeFilter === 'This Week' || timeFilter === 'Last 30 Days'
-                ? 'Weekly trend'
-                : timeFilter === 'Year to Date'
-                ? 'YTD trend'
-                : 'Monthly trend'}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-    );
+    const sparklineData = displayedSeries.slice(-6);
+
+    return {
+      key: metric.key,
+      label: metric.label,
+      trend: {
+        isPositive,
+        formattedDelta,
+      },
+      value: formattedValue,
+      freq: frequencyLabel,
+      sparklineData,
+    };
   });
 
   const onBarClick = (data: any) => {
@@ -425,19 +400,71 @@ const App = () => {
           {currentSeriesLabel}
         </Typography>
 
-        <Grid container spacing={3} className="dashboard-row">
+        <Grid container spacing={2} className="dashboard-row">
           <Grid item xs={12}>
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(220px, 1fr))' : 'repeat(4, minmax(240px, 1fr))',
-                gap: 14,
-                overflowX: isMobile ? 'auto' : 'visible',
-                pb: isMobile ? 1 : 0,
-              }}
-            >
-              {metricCards}
-            </Box>
+            <Card className="metric-card" sx={{ p: 2, pb: 1.5 }}>
+              <CardContent sx={{ p: 0 }}>
+                <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+                  <Box>
+                    <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 600 }}>
+                      Summary Snapshot
+                    </Typography>
+                    <Typography variant="h6" sx={{ color: '#F0F2F8', mt: 0.5 }}>
+                      Portfolio health at a glance
+                    </Typography>
+                  </Box>
+                  <Typography variant="caption" color="#AEB7D6">
+                    Quick-read KPI table for top-level monitoring
+                  </Typography>
+                </Box>
+                <TableContainer component={Box} sx={{ borderRadius: 2, overflow: 'hidden', background: '#16181F' }}>
+                  <Table size="small" sx={{ minWidth: 720, borderCollapse: 'separate', borderSpacing: '0 8px' }}>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Metric</TableCell>
+                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Trend</TableCell>
+                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Figure</TableCell>
+                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Sparkline</TableCell>
+                        <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none', fontWeight: 600 }}>Frequency</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {metricSummaryRows.map((row) => (
+                        <TableRow
+                          key={row.key}
+                          hover
+                          onClick={() => highlightedChart(row.key)}
+                          sx={{ cursor: 'pointer', '&:hover': { backgroundColor: 'rgba(91, 141, 239, 0.08)' } }}
+                        >
+                          <TableCell sx={{ color: '#F0F2F8', borderBottom: 'none', fontWeight: 600 }}>{row.label}</TableCell>
+                          <TableCell sx={{ color: row.trend.isPositive ? '#3DD68C' : '#F87171', borderBottom: 'none' }}>
+                            <Box display="flex" alignItems="center" gap={0.5}>
+                              {row.trend.isPositive ? <ArrowDropUp sx={{ fontSize: 18 }} /> : <ArrowDropDown sx={{ fontSize: 18 }} />}
+                              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                                {row.trend.formattedDelta}
+                              </Typography>
+                            </Box>
+                          </TableCell>
+                          <TableCell sx={{ color: '#F0F2F8', borderBottom: 'none', fontFamily: 'Roboto Mono, monospace' }}>
+                            {row.value}
+                          </TableCell>
+                          <TableCell sx={{ borderBottom: 'none', px: 0 }}>
+                            <Box sx={{ width: 140, height: 44, pl: 1 }}>
+                              <ResponsiveContainer width="100%" height="100%">
+                                <LineChart data={row.sparklineData}>
+                                  <Line type="monotone" dataKey={row.key} stroke="#A78BFA" strokeWidth={2} dot={false} />
+                                </LineChart>
+                              </ResponsiveContainer>
+                            </Box>
+                          </TableCell>
+                          <TableCell sx={{ color: '#AEB7D6', borderBottom: 'none' }}>{row.freq}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </CardContent>
+            </Card>
           </Grid>
 
           <Grid item xs={12} md={6} ref={barRef}>
@@ -453,9 +480,9 @@ const App = () => {
                   Click a bar to drill into that month
                 </Typography>
               </Box>
-              <Box sx={{ height: 320, px: 2, pb: 2 }}>
+              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={displayedSeries} onClick={onBarClick} margin={{ left: 0, right: 10, top: 10, bottom: 10 }}>
+                  <BarChart data={displayedSeries} onClick={onBarClick} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
                     <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
                     <YAxis tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
@@ -497,9 +524,9 @@ const App = () => {
                   </Typography>
                 </Box>
               </Box>
-              <Box sx={{ height: 320, px: 2, pb: 2 }}>
+              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={displayedSeries} margin={{ left: 0, right: 10, top: 10, bottom: 10 }}>
+                  <LineChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
                     <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
                     <YAxis tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} unit="%" />
@@ -523,9 +550,9 @@ const App = () => {
                   <Typography variant="h6">Revenue by type</Typography>
                 </Box>
               </Box>
-              <Box sx={{ height: 320, px: 2, pb: 2 }}>
+              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={displayedSeries} margin={{ left: 0, right: 10, top: 10, bottom: 10 }}>
+                  <AreaChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
                     <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
                     <YAxis tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
@@ -550,9 +577,9 @@ const App = () => {
                   <Typography variant="h6">Audience response</Typography>
                 </Box>
               </Box>
-              <Box sx={{ height: 320, px: 2, pb: 2 }}>
+              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <ComposedChart data={displayedSeries} margin={{ left: 0, right: 10, top: 10, bottom: 10 }}>
+                  <ComposedChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
                     <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
                     <YAxis yAxisId="left" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} unit="%" />
@@ -579,9 +606,9 @@ const App = () => {
                   Click a dot to pin details
                 </Typography>
               </Box>
-              <Box sx={{ height: 420, px: 2, pb: 2 }}>
+              <Box sx={{ height: 300, px: 2, pb: 1.5 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <ScatterChart margin={{ left: 0, right: 20, top: 10, bottom: 10 }}>
+                  <ScatterChart margin={{ left: 0, right: 20, top: 6, bottom: 6 }}>
                     <CartesianGrid stroke="rgba(255,255,255,0.08)" />
                     <XAxis type="number" dataKey="x" name="Engagement" unit="%" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
                     <YAxis type="number" dataKey="y" name="Avg time" unit="s" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
