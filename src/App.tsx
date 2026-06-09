@@ -281,6 +281,9 @@ const App = () => {
           month: month.month,
           year: month.year,
           label: `${week.weekLabel}`,
+          subscriber_churn: month.subscriber_churn,
+          content_publish_volume: month.content_publish_volume,
+          avg_time_on_page: month.avg_time_on_page,
           revenue_breakdown: month.revenue_breakdown,
         })),
       ),
@@ -304,6 +307,7 @@ const App = () => {
     label: week.weekLabel,
     month: selectedMonthEntry.month,
     year: selectedMonthEntry.year,
+    subscriber_churn: selectedMonthEntry.subscriber_churn,
     content_publish_volume: selectedMonthEntry.content_publish_volume,
     avg_time_on_page: selectedMonthEntry.avg_time_on_page,
     revenue_breakdown: selectedMonthEntry.revenue_breakdown,
@@ -488,6 +492,24 @@ const App = () => {
               Monthly View
             </ToggleButton>
           </ToggleButtonGroup>
+          {timeFilter === 'Month Picker' ? (
+            <FormControl size="small" sx={{ minWidth: 180 }}>
+              <InputLabel id="month-picker-label">Month</InputLabel>
+              <Select
+                labelId="month-picker-label"
+                value={selectedMonth}
+                label="Month"
+                onChange={(event: SelectChangeEvent) => setSelectedMonth(event.target.value)}
+                sx={{ color: '#F0F2F8' }}
+              >
+                {monthlyData.map((month) => (
+                  <MenuItem key={monthLabel(month)} value={monthLabel(month)}>
+                    {monthLabel(month)}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          ) : null}
         </Toolbar>
         <Box className="solid-horizon" />
       </AppBar>
@@ -568,19 +590,19 @@ const App = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={barRef}>
-            <Card className={`chart-card ${highlightedMetric === 'content_views' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
+            <Card className={`chart-card ${highlightedMetric === 'content_views' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary">
                     Content Views
                   </Typography>
-                  <Typography variant="h6">Views by {view === 'weekly' ? 'week' : 'month'}</Typography>
+                  <Typography variant="subtitle1">Views by {view === 'weekly' ? 'week' : 'month'}</Typography>
                 </Box>
                 <Typography variant="caption" color="text.secondary">
-                  Click a bar to drill into that month
+                  Click to drill
                 </Typography>
               </Box>
-              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
+              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={displayedSeries} onClick={onBarClick} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
@@ -602,13 +624,13 @@ const App = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={churnRef}>
-            <Card className={`chart-card ${highlightedMetric === 'subscriber_churn' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
+            <Card className={`chart-card ${highlightedMetric === 'subscriber_churn' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary">
                     Subscriber Churn Rate
                   </Typography>
-                  <Typography variant="h6">Churn trend</Typography>
+                  <Typography variant="subtitle1">Churn trend</Typography>
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
                   <TextField
@@ -616,15 +638,15 @@ const App = () => {
                     onChange={handleThresholdChange}
                     size="small"
                     inputProps={{ inputMode: 'decimal', pattern: '[0-9]*\.?[0-9]+' }}
-                    sx={{ width: 92, '& .MuiInputBase-input': { color: '#F0F2F8' } }}
+                    sx={{ width: 72, '& .MuiInputBase-input': { color: '#F0F2F8' } }}
                     variant="outlined"
                   />
                   <Typography variant="caption" color="text.secondary">
-                    Target threshold
+                    Target
                   </Typography>
                 </Box>
               </Box>
-              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
+              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
@@ -641,43 +663,43 @@ const App = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={revenueRef}>
-            <Card className={`chart-card ${highlightedMetric === 'ad_revenue' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
+            <Card className={`chart-card ${highlightedMetric === 'ad_revenue' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary">
                     Ad Revenue Composition
                   </Typography>
-                  <Typography variant="h6">Revenue by type</Typography>
+                  <Typography variant="subtitle1">Revenue by type</Typography>
                 </Box>
               </Box>
-              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
+              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
+                  <BarChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
                     <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
                     <YAxis tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
                     <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
-                    <Area dataKey="revenue_breakdown.display" stackId="1" stroke="#5B8DEF" fill="#5B8DEF" />
-                    <Area dataKey="revenue_breakdown.pre_roll" stackId="1" stroke="#A78BFA" fill="#A78BFA" />
-                    <Area dataKey="revenue_breakdown.sponsored" stackId="1" stroke="#3DD68C" fill="#3DD68C" />
                     <Legend wrapperStyle={{ color: '#F0F2F8' }} />
-                  </AreaChart>
+                    <Bar dataKey="revenue_breakdown.display" stackId="a" fill="#5B8DEF" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="revenue_breakdown.pre_roll" stackId="a" fill="#A78BFA" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="revenue_breakdown.sponsored" stackId="a" fill="#3DD68C" radius={[6, 6, 0, 0]} />
+                  </BarChart>
                 </ResponsiveContainer>
               </Box>
             </Card>
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={engagementRef}>
-            <Card className={`chart-card ${highlightedMetric === 'engagement_rate' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}>
+            <Card className={`chart-card ${highlightedMetric === 'engagement_rate' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}>
               <Box className="chart-header">
                 <Box>
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary">
                     Engagement vs Publish Volume
                   </Typography>
-                  <Typography variant="h6">Audience response</Typography>
+                  <Typography variant="subtitle1">Audience response</Typography>
                 </Box>
               </Box>
-              <Box sx={{ height: 260, px: 2, pb: 1.5 }}>
+              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
@@ -694,19 +716,19 @@ const App = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} sx={{ minWidth: 0 }} ref={scatterRef}>
-            <Card className={`chart-card ${highlightedMetric === 'avg_time_on_page' ? 'metric-highlight' : ''}`} sx={{ minHeight: 260 }}> 
+            <Card className={`chart-card ${highlightedMetric === 'avg_time_on_page' ? 'metric-highlight' : ''}`} sx={{ minHeight: 220, p: 1.5 }}> 
               <Box className="chart-header">
                 <Box>
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography variant="body2" color="text.secondary">
                     Content Quality Signal
                   </Typography>
-                  <Typography variant="h6">Time on page vs engagement</Typography>
+                  <Typography variant="subtitle1">Time on page vs engagement</Typography>
                 </Box>
                 <Typography variant="caption" color="text.secondary">
-                  Click a dot to pin details
+                  Click a dot to pin
                 </Typography>
               </Box>
-              <Box sx={{ height: 300, px: 2, pb: 1.5 }}>
+              <Box sx={{ height: 220, px: 1.5, pb: 1 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <ScatterChart margin={{ left: 0, right: 20, top: 6, bottom: 6 }}>
                     <CartesianGrid stroke="rgba(255,255,255,0.08)" />
@@ -748,31 +770,6 @@ const App = () => {
             </Card>
           </Grid>
         </Grid>
-
-        <Box sx={{ mt: 8, display: 'flex', alignItems: 'center', gap: 2 }}>
-          <CalendarMonth sx={{ color: '#A78BFA' }} />
-          <Typography variant="caption" color="text.secondary">
-            {timeFilter === 'Month Picker' ? `Focused on ${selectedMonthEntry.month} ${selectedMonthEntry.year}` : 'Interactive dashboard aligned to your selected range.'}
-          </Typography>
-          {timeFilter === 'Month Picker' ? (
-            <FormControl size="small" sx={{ minWidth: 180 }}>
-              <InputLabel id="month-picker-label">Month</InputLabel>
-              <Select
-                labelId="month-picker-label"
-                value={selectedMonth}
-                label="Month"
-                onChange={(event: SelectChangeEvent) => setSelectedMonth(event.target.value)}
-                sx={{ color: '#F0F2F8' }}
-              >
-                {monthlyData.map((month) => (
-                  <MenuItem key={monthLabel(month)} value={monthLabel(month)}>
-                    {monthLabel(month)}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          ) : null}
-        </Box>
       </Container>
     </Box>
   </ThemeProvider>
