@@ -199,6 +199,31 @@ const appTheme = createTheme({
       styleOverrides: {
         root: {
           color: '#F0F2F8',
+          '&:hover': {
+            backgroundColor: 'rgba(91, 141, 239, 0.08)',
+            color: '#F0F2F8',
+          },
+          '&.Mui-selected': {
+            color: '#F0F2F8',
+            backgroundColor: 'rgba(91, 141, 239, 0.12)',
+          },
+          '&.Mui-selected:hover': {
+            color: '#F0F2F8',
+            backgroundColor: 'rgba(91, 141, 239, 0.18)',
+          },
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          color: '#F0F2F8',
+          '&.Mui-selected': {
+            color: '#F0F2F8',
+          },
+          '&.Mui-selected:hover': {
+            color: '#F0F2F8',
+          },
         },
       },
     },
@@ -267,6 +292,9 @@ const App = () => {
   const revenueRef = useRef<HTMLDivElement | null>(null);
   const engagementRef = useRef<HTMLDivElement | null>(null);
   const scatterRef = useRef<HTMLDivElement | null>(null);
+
+  const chartTickStyle = { fill: '#8B90A7', fontSize: 12 };
+  const chartLegendStyle = { color: '#F0F2F8', fontSize: 12 };
 
   const selectedMonthEntry = useMemo(
     () => monthlyData.find((entry) => monthLabel(entry) === selectedMonth) ?? monthlyData[monthlyData.length - 1],
@@ -606,8 +634,8 @@ const App = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={displayedSeries} onClick={onBarClick} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
+                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
+                    <YAxis tick={chartTickStyle} axisLine={false} tickLine={false} />
                     <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
                     <Bar dataKey="content_views" radius={[8, 8, 0, 0]}> 
                       {displayedSeries.map((entry, index) => {
@@ -650,10 +678,10 @@ const App = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} unit="%" />
+                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
+                    <YAxis tick={chartTickStyle} axisLine={false} tickLine={false} unit="%" />
                     <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
-                    <ReferenceLine y={churnThreshold} stroke="#3DD68C" strokeDasharray="5 5" label={{ value: `Target ${churnThreshold}%`, position: 'insideTopRight', fill: '#3DD68C' }} />
+                    <ReferenceLine y={churnThreshold} stroke="#3DD68C" strokeDasharray="5 5" label={{ value: `Target ${churnThreshold}%`, position: 'insideTopRight', fill: '#3DD68C', fontSize: 12 }} />
                     <Line type="monotone" dataKey="subscriber_churn" stroke="#F87171" strokeWidth={3} dot={{ r: 4, fill: '#F87171' }} />
                     <Area type="monotone" dataKey="subscriber_churn" stroke="none" fillOpacity={0.18} fill="#F87171" />
                   </LineChart>
@@ -676,10 +704,10 @@ const App = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
+                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
+                    <YAxis tick={chartTickStyle} axisLine={false} tickLine={false} />
                     <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
-                    <Legend wrapperStyle={{ color: '#F0F2F8' }} />
+                    <Legend wrapperStyle={chartLegendStyle} />
                     <Bar dataKey="revenue_breakdown.display" stackId="a" fill="#5B8DEF" radius={[6, 6, 0, 0]} />
                     <Bar dataKey="revenue_breakdown.pre_roll" stackId="a" fill="#A78BFA" radius={[6, 6, 0, 0]} />
                     <Bar dataKey="revenue_breakdown.sponsored" stackId="a" fill="#3DD68C" radius={[6, 6, 0, 0]} />
@@ -703,9 +731,9 @@ const App = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={displayedSeries} margin={{ left: 0, right: 10, top: 6, bottom: 6 }}>
                     <CartesianGrid vertical={false} stroke="rgba(255,255,255,0.08)" />
-                    <XAxis dataKey="label" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
-                    <YAxis yAxisId="left" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} unit="%" />
-                    <YAxis yAxisId="right" orientation="right" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
+                    <XAxis dataKey="label" tick={chartTickStyle} axisLine={false} tickLine={false} />
+                    <YAxis yAxisId="left" tick={chartTickStyle} axisLine={false} tickLine={false} unit="%" />
+                    <YAxis yAxisId="right" orientation="right" tick={chartTickStyle} axisLine={false} tickLine={false} />
                     <Tooltip contentStyle={{ background: '#11151F', borderColor: '#2A2D3A' }} />
                     <Line yAxisId="left" type="monotone" dataKey="engagement_rate" stroke="#5B8DEF" strokeWidth={3} dot={{ r: 4, fill: '#5B8DEF' }} />
                     <Line yAxisId="right" type="monotone" dataKey="content_publish_volume" stroke="#A78BFA" strokeWidth={2} dot={false} strokeDasharray="5 5" />
@@ -732,8 +760,8 @@ const App = () => {
                 <ResponsiveContainer width="100%" height="100%">
                   <ScatterChart margin={{ left: 0, right: 20, top: 6, bottom: 6 }}>
                     <CartesianGrid stroke="rgba(255,255,255,0.08)" />
-                    <XAxis type="number" dataKey="x" name="Engagement" unit="%" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
-                    <YAxis type="number" dataKey="y" name="Avg time" unit="s" tick={{ fill: '#8B90A7' }} axisLine={false} tickLine={false} />
+                    <XAxis type="number" dataKey="x" name="Engagement" unit="%" tick={chartTickStyle} axisLine={false} tickLine={false} />
+                    <YAxis type="number" dataKey="y" name="Avg time" unit="s" tick={chartTickStyle} axisLine={false} tickLine={false} />
                     <ZAxis dataKey="z" range={[100, 400]} />
                     <Tooltip
                       cursor={{ strokeDasharray: '3 3' }}
