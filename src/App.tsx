@@ -378,11 +378,17 @@ const App = () => {
           </Typography>
 
           <Box component="section">
-            <Box sx={{ display: 'grid', gap: 16, gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))' }}>
-              <Box>
+            <Box
+              sx={{
+                display: 'grid',
+                gap: 3,
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, minmax(0, 1fr))',
+              }}
+            >
+              <Box sx={{ width: '100%', minHeight: 360, display: 'flex', flexDirection: 'column' }}>
                 <SummarySnapshotCard rows={metricSummaryRows} onMetricClick={highlightedChart} />
               </Box>
-              <Box ref={barRef}>
+              <Box ref={barRef} sx={{ width: '100%', minHeight: 360, display: 'flex', flexDirection: 'column' }}>
                 <ContentViewsChart
                   displayedSeries={displayedSeries}
                   highlighted={highlightedMetric === 'content_views'}
@@ -390,7 +396,7 @@ const App = () => {
                   onBarClick={onBarClick}
                 />
               </Box>
-              <Box ref={churnRef}>
+              <Box ref={churnRef} sx={{ width: '100%', minHeight: 360, display: 'flex', flexDirection: 'column' }}>
                 <SubscriberChurnChart
                   displayedSeries={displayedSeries}
                   churnThreshold={churnThreshold}
@@ -399,13 +405,13 @@ const App = () => {
                   subtitle="Churn trend"
                 />
               </Box>
-              <Box ref={revenueRef}>
+              <Box ref={revenueRef} sx={{ width: '100%', minHeight: 360, display: 'flex', flexDirection: 'column' }}>
                 <AdRevenueChart displayedSeries={displayedSeries} highlighted={highlightedMetric === 'ad_revenue'} subtitle="Revenue by type" />
               </Box>
-              <Box ref={engagementRef}>
+              <Box ref={engagementRef} sx={{ width: '100%', minHeight: 360, display: 'flex', flexDirection: 'column' }}>
                 <EngagementChart displayedSeries={displayedSeries} highlighted={highlightedMetric === 'engagement_rate'} subtitle="Audience response" />
               </Box>
-              <Box ref={scatterRef}>
+              <Box ref={scatterRef} sx={{ width: '100%', minHeight: 360, display: 'flex', flexDirection: 'column' }}>
                 <QualityScatterChart
                   displayedSeries={displayedSeries}
                   highlighted={highlightedMetric === 'avg_time_on_page'}

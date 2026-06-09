@@ -14,7 +14,7 @@ const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
     <Card
       ref={ref}
       className={`chart-card ${highlighted ? 'metric-highlight' : ''}`}
-      sx={{ minHeight: 220, p: 1.5 }}
+      sx={{ height: '100%', minHeight: 360, p: 1.5, display: 'flex', flexDirection: 'column' }}
     >
       <Box className="chart-header">
         <Box>
@@ -29,7 +29,7 @@ const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
         </Box>
         {rightNode ? <Box>{rightNode}</Box> : null}
       </Box>
-      <Box sx={{ height: 220, px: 1.5, pb: 1 }}>{children}</Box>
+      <Box sx={{ flex: 1, minHeight: 0, width: '100%', px: 1.5, pb: 1 }}>{children}</Box>
     </Card>
   ),
 );

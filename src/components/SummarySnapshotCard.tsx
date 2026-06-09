@@ -21,8 +21,8 @@ type SummarySnapshotCardProps = {
 };
 
 const SummarySnapshotCard = ({ rows, onMetricClick }: SummarySnapshotCardProps) => (
-  <Card className="metric-card" sx={{ p: 2, pb: 1.5, minHeight: 220 }}>
-    <CardContent sx={{ p: 0 }}>
+  <Card className="metric-card" sx={{ height: '100%', minHeight: 360, p: 2, pb: 1.5, display: 'flex', flexDirection: 'column' }}>
+    <CardContent sx={{ p: 0, display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
         <Box>
           <Typography variant="subtitle2" color="text.secondary" sx={{ fontWeight: 600 }}>
@@ -36,7 +36,7 @@ const SummarySnapshotCard = ({ rows, onMetricClick }: SummarySnapshotCardProps) 
           Quick-read KPI table for top-level monitoring
         </Typography>
       </Box>
-      <TableContainer component={Box} sx={{ borderRadius: 2, overflowX: 'auto', background: '#16181F', width: '100%' }}>
+      <TableContainer component={Box} sx={{ borderRadius: 2, overflowX: 'auto', background: '#16181F', width: '100%', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
         <Table
           size="small"
           sx={{
@@ -45,6 +45,7 @@ const SummarySnapshotCard = ({ rows, onMetricClick }: SummarySnapshotCardProps) 
             borderCollapse: 'separate',
             borderSpacing: '0 8px',
             tableLayout: 'fixed',
+            height: '100%',
           }}
         >
           <TableHead>
