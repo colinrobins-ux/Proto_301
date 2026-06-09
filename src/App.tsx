@@ -6,6 +6,8 @@ import {
   Card,
   CardContent,
   Container,
+  CssBaseline,
+  createTheme,
   FormControl,
   Grid,
   IconButton,
@@ -19,13 +21,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  ThemeProvider,
   ToggleButton,
   ToggleButtonGroup,
   TextField,
   Toolbar,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import {
   ArrowDropDown,
@@ -139,6 +141,100 @@ type ChartPoint = {
   };
 };
 
+const appTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      default: '#0E0F14',
+      paper: '#16181F',
+    },
+    text: {
+      primary: '#F0F2F8',
+      secondary: '#AEB7D6',
+    },
+    divider: 'rgba(91, 141, 239, 0.18)',
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: '#0E0F14',
+          color: '#F0F2F8',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#16181F',
+          color: '#F0F2F8',
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          color: '#F0F2F8',
+        },
+        notchedOutline: {
+          borderColor: 'rgba(255,255,255,0.12)',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#AEB7D6',
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: '#F0F2F8',
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: '#F0F2F8',
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          backgroundColor: '#11151F',
+          color: '#F0F2F8',
+          border: '1px solid rgba(91,141,239,0.2)',
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          color: '#F0F2F8',
+        },
+      },
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: {
+          color: '#F0F2F8',
+        },
+      },
+    },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        grouped: {
+          borderColor: 'rgba(91,141,239,0.18)',
+        },
+      },
+    },
+  },
+});
+
 const monthLabel = (entry: MonthlyEntry) => `${entry.month} ${entry.year}`;
 
 const formatDelta = (current: number, prior: number) => {
@@ -158,8 +254,7 @@ const getLast = <T,>(items: T[], offset = 1): T | undefined => {
 const clampValue = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 const App = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery('(max-width:600px)');
   const [timeFilter, setTimeFilter] = useState<FilterOption>('This Month');
   const [view, setView] = useState<'monthly' | 'weekly'>('monthly');
   const [selectedMonth, setSelectedMonth] = useState<string>(monthLabel(monthlyData[monthlyData.length - 1]));
@@ -349,8 +444,10 @@ const App = () => {
       : 'Rolling monthly trend';
 
   return (
-    <Box sx={{ minHeight: '100vh', background: '#0E0F14', pb: 8 }}>
-      <AppBar position="sticky" className="mui-appbar" elevation={0}>
+    <ThemeProvider theme={appTheme}>
+      <CssBaseline />
+      <Box sx={{ minHeight: '100vh', background: '#0E0F14', pb: 8 }}>
+        <AppBar position="sticky" className="mui-appbar" elevation={0}>
         <Toolbar sx={{ gap: 2, flexWrap: 'wrap' }}>
           <Box>
             <Typography variant="h6" sx={{ fontWeight: 600, letterSpacing: '0.08em' }}>
@@ -678,6 +775,7 @@ const App = () => {
         </Box>
       </Container>
     </Box>
+  </ThemeProvider>
   );
 };
 
